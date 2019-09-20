@@ -1,25 +1,27 @@
 import {Game, GameOptions} from './Game';
 import {Entity, Position, Size} from './Entities/Entity';
-import {Unit} from "./Entities/Unit";
-
-class Wood extends Entity {
-}
+import {Player} from "./Entities/Player";
+import {Collectable} from "./Entities";
+import {Point, Edge} from "./Geometry";
 
 const canvas = <HTMLCanvasElement>document.getElementById('canvas');
 
-const game = new Game({ticksPerMinute: 60*60}, canvas)
+const game = new Game({ticksPerSecond: 60}, canvas)
 const world = game.getWorld();
 
-world.addEntity(new Entity(
-  {x: 0, y: 0},
-  {width: 20, height: 20}
-));
+for(let x = 0; x < 10; x++) {
+  for(let y = 0; y < 10; y++) {
+    world.addEntity(new Entity(
+      {x: 100 * x, y: 100 * y},
+      {width: 20, height: 20}
+    ));
+  }
+}
 
-world.addEntity(new Unit(
+world.addEntity(new Player(
   {x: 40, y: 40},
-  {width: 20, height: 20}
+  {width: 30, height: 30}
 ));
-
 
 
 game.start()
