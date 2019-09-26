@@ -2,6 +2,7 @@ import {Entity} from "./Entities/Entity";
 import {World} from "./World"; 
 import {Mouse} from "./Input/Mouse";
 import {Keyboard} from "./Input/Keyboard";
+
 export interface Input {
     mouse: Mouse,
     keyboard: Keyboard
@@ -18,6 +19,8 @@ export class Game {
   keyboard: Keyboard;
   input: Input; 
   time: number;
+
+  camera: Camera;
 
   constructor(options: GameOptions, canvas: HTMLCanvasElement) {
     this.options = options;
