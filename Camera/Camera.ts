@@ -26,14 +26,16 @@ export class Camera extends Entity {
       this.freeHand = true
     } 
 
-
     if(this.target && this.freeHand) {
-      this.position.x = (this.canvas.width/2) - this.target.position.x;
-      this.position.y = (this.canvas.height/2) - this.target.position.y;
+      this.position.x = this.target.position.x;
+      this.position.y = this.target.position.y;
     }
   }
 
   render(context: CanvasRenderingContext2D ) {
-    context.translate(this.position.x, this.position.y);
+    context.translate(
+      -this.position.x + (this.canvas.width/2),
+      -this.position.y + (this.canvas.height/2)
+    );
   }
 }

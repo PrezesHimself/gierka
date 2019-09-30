@@ -16,19 +16,23 @@ export class World {
     this.player = this.addEntity(new Player(
         {x: 440, y: 440},
         {width: 30, height: 30}
-      )),
-    this.camera = this.addEntity(new Camera(
+    ));
+
+    this.camera = new Camera(
       new Point(0,0),
       this.player,
       this.canvas
-    ));
+    );
   }
 
   update(input: Input, time: number) {
     // do stuff
     this.context.save();
-  
     this.context.clearRect(0, 0, this.canvas.width, this.canvas.height);
+      
+    this.camera.update(input, this);
+    this.camera.render(this.context);
+
     this.entities.forEach(
       (entity: Entity) => {
         entity.update(input, this);
