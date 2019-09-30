@@ -1,21 +1,39 @@
-import {Point} from "./Geometry"
-import {Entity} from "./Entities"
+import {Point} from "../Geometry"
+import {Entity} from "../Entities"
+import {World} from "./World";
+import {Input} from "./Game";
+import {Keyboard} from "../Input/Keyboard";
 
-export class Camera {
-  private readonly context: CanvasRenderingContext2D;
+export class Camera extends Entity {
+  private freeHand: boolean = true;
+  private isColliding: boolean = false;
+
   constructor(
-    private position: Point,
+    public position: Point,
     private readonly target: Entity = null,
     private readonly canvas: HTMLCanvasElement 
   ) {
-    this.context = this.canvas.getContext('2d');
+    
+    this.freeHand = !target;
   }
 
-  update() {
-    if(this.target) {
+  update(input: Input, world: World) {
+    if(input.keyboard.isDown(Keyboard.KEYCODES.f)) {
+      this.freeHand = false
+    } 
+
+    if(input.keyboard.isDown(Keyboard.KEYCODES.g)) {
+      this.freeHand = true
+    } 
+
+
+    if(this.target && this.freeHand) {
       this.position.x = (this.canvas.width/2) - this.target.position.x;
       this.position.y = (this.canvas.height/2) - this.target.position.y;
     }
-    this.context.translate(this.position.x, this.position.y);
+  }
+
+  render(context: CanvasRenderingContext2D ) {
+    context.translate(this.position.x, this.position.y);
   }
 }

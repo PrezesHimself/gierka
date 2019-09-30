@@ -9,23 +9,25 @@ export class Entity {
   selectable: boolean = false;
   collision: Polygon;
   collidesWith: Entity[] = [];
-  isColliding: boolean = false;
+  private isColliding: boolean = true;
   weight: number = 1000 * 0.017;
 
   constructor(
     protected position: Position,
-    protected size: Size,
-    protected speed: Vector2D,
+    protected size: Size = null,
+    protected speed: Vector2D = null,
     protected velocity: Vector2D = {x: 0, y: 0}
   ) {
-    this.collision = new Polygon(
-      [
-        new Point(this.position.x, this.position.y),
-        new Point(this.position.x + this.size.width, this.position.y),
-        new Point(this.position.x + this.size.width, this.position.y + this.size.height),
-        new Point(this.position.x, this.position.y + this.size.height),
-      ]
-    );
+    if(this.isColliding) {
+      this.collision = new Polygon(
+        [
+          new Point(this.position.x, this.position.y),
+          new Point(this.position.x + this.size.width, this.position.y),
+          new Point(this.position.x + this.size.width, this.position.y + this.size.height),
+          new Point(this.position.x, this.position.y + this.size.height),
+        ]
+      );
+    }
   }
 
   update(input: Input, world: World) {
@@ -35,14 +37,37 @@ export class Entity {
     this.position.x += this.velocity.x;
     this.position.y += this.velocity.y;
 
+    this.updateCollisionBox();
+  };
+
+  updateCollisionBox() {
+    if(!this.collision) return;
+
     this.collision.points.forEach((
       point: Point
     ) => {
       point.x += this.velocity.x;
       point.y += this.velocity.y;
     });
+  }
 
-  };
+  renderCollisionBox(context: CanvasRenderingContext2D) {
+    if(!this.collision) return;
+
+    context.fillStyle = this.color;
+    if(this.isColliding) {
+      context.fillStyle = 'red';
+    }
+
+    context.beginPath();
+    context.moveTo(this.collision.points[0].x, this.collision.points[0].y);
+    this.collision.points.forEach(
+      (point: Point) => {
+        context.lineTo(point.x, point.y);
+      }
+    )
+    context.fill();
+  }
 
   public collisionCheck(entity: Entity, world: World) {
     if(!this.collision || !entity.collision) return false;
@@ -65,21 +90,8 @@ export class Entity {
     this.velocity.y = -Math.sin(collision.getCollisionAngle()) * force.y;
   }
 
-  render(context: CanvasRenderingContext2D ) {
-    context.fillStyle = this.color;
-    if(this.isColliding) {
-      context.fillStyle = 'red';
-    }
-    // context.fillRect(this.position.x, this.position.y, this.size.width, this.size.height);
-
-    context.beginPath();
-    context.moveTo(this.collision.points[0].x, this.collision.points[0].y);
-    this.collision.points.forEach(
-      (point: Point) => {
-        context.lineTo(point.x, point.y);
-      }
-    )
-    context.fill();
+  render(context: CanvasRenderingContext2D) {
+    this.renderCollisionBox(context);
   }
 }
 
