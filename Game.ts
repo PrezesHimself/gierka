@@ -38,8 +38,8 @@ export class Game {
   }
 
   resizeCanvas(canvas) {
-    canvas.width = window.innerWidth - 20;
-    canvas.height = window.innerHeight - 20;
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
   }
 
   public start() {

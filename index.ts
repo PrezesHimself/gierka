@@ -2,6 +2,7 @@ import {Game, GameOptions} from './Game';
 import {Entity, Position, Size} from './Entities/Entity';
 import {Collectable} from "./Entities";
 import {Point, Edge} from "./Geometry";
+import './style.css';
 
 const canvas = <HTMLCanvasElement>document.getElementById('canvas');
 

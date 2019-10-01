@@ -8,6 +8,7 @@ export class World {
   private entities: Entity[] = [];
   private camera: Camera;
   private player: Player;
+  private background: Image = new Image();
 
   public friction: number = 0.95;
 
@@ -23,17 +24,31 @@ export class World {
       this.player,
       this.canvas
     );
+
+    const backgroundImage = new Image()
+    backgroundImage.src = 'https://cdnb.artstation.com/p/assets/images/images/001/146/575/large/ulrick-wery-tileableset2-soil.jpg?1441028621';
+    backgroundImage.onload = () => {
+      this.background = this.context.createPattern(backgroundImage, 'repeat');
+    };
   }
 
   update(input: Input, time: number) {
     // do stuff
     this.context.save();
     this.context.clearRect(0, 0, this.canvas.width, this.canvas.height);
-      
+
     this.camera.update(input, this);
     this.camera.render(this.context);
 
-    this.entities.forEach(
+    this.context.fillStyle = this.background;
+    this.context.fillRect(-10000, -10000, 20000, 20000);
+
+
+    this.getEntities(
+      (entityA:Entity, entityB: Entity):number => {
+        return entityA.position.y < entityB.position.y ? -1 : 1
+      }
+    ).forEach(
       (entity: Entity) => {
         entity.update(input, this);
         entity.render(this.context);
@@ -71,6 +86,12 @@ export class World {
 
   public removeEntity(entity: Entity) {
     this.entities = this.entities.filter( e => e !== entity )
+  }
+
+  public getEntities(sort: Function) : Entity[] {
+    if(!sort) return this.entities;
+
+    return this.entities.sort(sort)
   }
   
 }

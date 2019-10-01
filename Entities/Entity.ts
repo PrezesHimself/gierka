@@ -2,14 +2,18 @@ import {World} from "./World";
 import {Input} from "./Game";
 import {Polygon, Point} from "../Geometry"; 
 import {Collision} from "../Physics";
+import {Sprite} from "../Graphics";
 
 export class Entity {
   
   color:string = 'black';
   selectable: boolean = false;
   collision: Polygon;
+  rotation: number = 0;
   collidesWith: Entity[] = [];
   private isColliding: boolean = true;
+  private sprite: Sprite;
+
   weight: number = 1000 * 0.017;
 
   constructor(
@@ -18,13 +22,21 @@ export class Entity {
     protected speed: Vector2D = null,
     protected velocity: Vector2D = {x: 0, y: 0}
   ) {
+    const halfWidth: number = this.size.width/2;
+    const halfHeight: number = this.size.height/2;
+
+    this.sprite = new Sprite(
+      'https://i.ibb.co/CKKVtdY/Pin-Clipart-com-videogames-clipart-576226.png',
+      {width: 40, height: 40}
+    );
+
     if(this.isColliding) {
       this.collision = new Polygon(
         [
-          new Point(this.position.x, this.position.y),
-          new Point(this.position.x + this.size.width, this.position.y),
-          new Point(this.position.x + this.size.width, this.position.y + this.size.height),
-          new Point(this.position.x, this.position.y + this.size.height),
+          new Point(this.position.x - halfWidth, this.position.y - halfHeight),
+          new Point(this.position.x + halfWidth, this.position.y - halfHeight ),
+          new Point(this.position.x + halfWidth, this.position.y + halfHeight),
+          new Point(this.position.x - halfWidth, this.position.y + halfHeight),
         ]
       );
     }
@@ -53,7 +65,7 @@ export class Entity {
 
   renderCollisionBox(context: CanvasRenderingContext2D) {
     if(!this.collision) return;
-
+    context.globalAlpha = 0.5;
     context.fillStyle = this.color;
     if(this.isColliding) {
       context.fillStyle = 'red';
@@ -67,6 +79,7 @@ export class Entity {
       }
     )
     context.fill();
+    context.globalAlpha = 1;
   }
 
   public collisionCheck(entity: Entity, world: World) {
@@ -102,7 +115,17 @@ export class Entity {
   }
 
   render(context: CanvasRenderingContext2D) {
-    this.renderCollisionBox(context);
+    if(this.sprite.isReady) {
+      context.drawImage(
+        this.sprite.image,
+        this.position.x - (this.sprite.size.width/2),
+        this.position.y - (this.sprite.size.height/2),
+        this.sprite.size.width,
+        this.sprite.size.height
+      );
+    }
+    
+    // this.renderCollisionBox(context);
   }
 }
 
