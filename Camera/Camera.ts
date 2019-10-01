@@ -38,16 +38,16 @@ export class Camera extends Entity {
       this.freeHand = true
     } 
 
-    if(input.keyboard.isDown(Keyboard.KEYCODES.d)) {
+    if(input.keyboard.isDown(Keyboard.KEYCODES.d) || input.mouse.x > window.innerWidth - 50) {
       this.velocity.x += this.speed.x;
     } 
-    if(input.keyboard.isDown(Keyboard.KEYCODES.a)) {
+    if(input.keyboard.isDown(Keyboard.KEYCODES.a) || input.mouse.x < 50) {
       this.velocity.x -= this.speed.x;
     } 
-    if(input.keyboard.isDown(Keyboard.KEYCODES.w)) {
+    if(input.keyboard.isDown(Keyboard.KEYCODES.w) || input.mouse.y < 50 ) {
       this.velocity.y -= this.speed.x;
     }  
-    if(input.keyboard.isDown(Keyboard.KEYCODES.s)) {
+    if(input.keyboard.isDown(Keyboard.KEYCODES.s) || input.mouse.y > window.innerHeight - 50) {
       this.velocity.y += this.speed.x;
     }
 
