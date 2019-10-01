@@ -84,10 +84,14 @@ export class Entity {
   }
 
   public moveTo(target: Point) {
-    const distance = this.position.distance(target);
-    console.log(distance)
-    this.position.x += distance.x/2;
-    this.position.y += distance.y/2;
+    if(!this.position.isEqual(target)) {
+      const distance = this.position.distance(target);
+      this.position.x += distance.x/2;
+      this.position.y += distance.y/2;
+    } else {
+      this.position.x = target.x;
+      this.position.y = target.y
+    }
   }
 
   public collisionHandler(entity: Entity, world: World, collision: Collision) {
