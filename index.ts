@@ -5,7 +5,7 @@ import {Point, Edge} from "./Geometry";
 
 const canvas = <HTMLCanvasElement>document.getElementById('canvas');
 
-const game = new Game({ticksPerSecond: 60}, canvas)
+const game = new Game({ticksPerSecond: 10}, canvas)
 const world = game.getWorld();
 
 for(let x = 0; x < 10; x++) {

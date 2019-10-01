@@ -83,6 +83,13 @@ export class Entity {
     return collided;
   }
 
+  public moveTo(target: Point) {
+    const distance = this.position.distance(target);
+    console.log(distance)
+    this.position.x += distance.x/2;
+    this.position.y += distance.y/2;
+  }
+
   public collisionHandler(entity: Entity, world: World, collision: Collision) {
     const force = collision.getCollisionForce();
 

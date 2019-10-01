@@ -6,4 +6,11 @@ export class Point {
     this.x = x;
     this.y = y;
   }
+
+  distance(target: Point ): Point {
+    return new Point(
+      target.x - this.x,
+      target.y - this.y
+    );
+  }
 } 
