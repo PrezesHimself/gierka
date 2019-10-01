@@ -5,6 +5,7 @@ import {Input} from "./Game";
 import {Keyboard} from "../Input/Keyboard";
 
 export class Camera extends Entity {
+  private offset: Point;
   private freeHand: boolean = true;
   private isColliding: boolean = false;
   weight: number = 60 * 0.017;
@@ -16,11 +17,15 @@ export class Camera extends Entity {
   constructor(
     public position: Point,
     private readonly target: Entity = null,
-    protected velocity: Vector2D = {x: 0, y: 0},
-    private readonly canvas: HTMLCanvasElement 
+    private readonly canvas: HTMLCanvasElement,
+    protected velocity: Vector2D = {x: 0, y: 0}
   ) {
-    
+    super(
+      position,
+      {width: canvas.width, height: canvas.height}
+      )
     this.freeHand = !target;
+    this.offset = new Point(canvas.width/2, canvas.height/2)
   }
 
   update(input: Input, world: World) {
@@ -49,14 +54,14 @@ export class Camera extends Entity {
     if(this.target && !this.freeHand) {
       this.moveTo(this.target.position)
     } else {
-      // super.update(input, world);
+      super.update(input, world);
     }
   }
 
   render(context: CanvasRenderingContext2D ) {
     context.translate(
-      -this.position.x ,
-      -this.position.y 
+      -this.position.x + this.offset.x ,
+      -this.position.y + this.offset.y
     );
   }
 }
