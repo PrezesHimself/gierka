@@ -25,7 +25,7 @@ export class Camera extends Entity {
       {width: canvas.width, height: canvas.height}
       )
     this.freeHand = !target;
-    this.offset = new Point(canvas.width/2, canvas.height/2)
+    this.offset = new Point(window.innerWidth / 2, window.innerHeight/2)
   }
 
   update(input: Input, world: World) {
@@ -60,8 +60,8 @@ export class Camera extends Entity {
 
   render(context: CanvasRenderingContext2D ) {
     context.translate(
-      -this.position.x + this.offset.x ,
-      -this.position.y + this.offset.y
+      (-this.position.x) + this.offset.x ,
+      (-this.position.y) + this.offset.y
     );
   }
 }
