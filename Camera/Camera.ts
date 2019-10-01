@@ -46,11 +46,11 @@ export class Camera extends Entity {
       this.velocity.y += this.speed.x;
     }
 
-    // if(this.target && this.freeHand) {
+    if(this.target && !this.freeHand) {
       this.moveTo(this.target.position)
-    // } else {
+    } else {
       // super.update(input, world);
-    // }
+    }
   }
 
   render(context: CanvasRenderingContext2D ) {
