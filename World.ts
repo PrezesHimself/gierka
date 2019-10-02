@@ -62,15 +62,6 @@ export class World {
       (entity: Entity) => {
         entity.update(input, this);
         entity.render(this.context);
-      }
-    )
-    
-    this.getEntities(
-      (entityA:Entity, entityB: Entity):number => {
-        return entityA.position.y < entityB.position.y ? -1 : 1
-      }
-    ).forEach(
-      (entity: Entity) => {
         entity.renderLight(this.lightsContext);
       }
     )
