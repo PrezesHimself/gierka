@@ -22,13 +22,19 @@ export class Game {
 
   camera: Camera;
 
-  constructor(options: GameOptions, canvas: HTMLCanvasElement) {
+  constructor(options: GameOptions, canvas: HTMLCanvasElement, lights: HTMLCanvasElement) {
     this.options = options;
     
-    this.world = new World(canvas);
+    this.world = new World(canvas, lights);
 
-     window.addEventListener('resize', () => this.resizeCanvas(canvas), false);
+    window.addEventListener('resize', () => {
+      this.resizeCanvas(canvas);
+      this.resizeCanvas(lights)
+    }, false);
+
     this.resizeCanvas(canvas);
+    this.resizeCanvas(lights)
+    
     this.mouse = new Mouse(canvas);
     this.keyboard = new Keyboard()
     this.input = {

@@ -5,6 +5,7 @@ import {Point} from "./Geometry";
 
 export class World {
   private readonly context: CanvasRenderingContext2D;
+  private readonly lightsContext: CanvasRenderingContext2D;
   private entities: Entity[] = [];
   private camera: Camera;
   private player: Player;
@@ -12,8 +13,13 @@ export class World {
 
   public friction: number = 0.95;
 
-  constructor(private readonly canvas: HTMLCanvasElement) {
+  constructor(
+    private readonly canvas: HTMLCanvasElement,
+    private readonly lights: HTMLCanvasElement
+  ) {
     this.context = this.canvas.getContext('2d');
+    this.lightsContext = this.lights.getContext('2d');
+
     this.player = this.addEntity(new Player(
         {x: 440, y: 440},
         {width: 30, height: 30}
@@ -35,10 +41,14 @@ export class World {
   update(input: Input, time: number) {
     // do stuff
     this.context.save();
+    this.lightsContext.save();
+
     this.context.clearRect(0, 0, this.canvas.width, this.canvas.height);
+    this.lightsContext.fillRect(0, 0, this.canvas.width, this.canvas.height);
 
     this.camera.update(input, this);
     this.camera.render(this.context);
+    this.camera.render(this.lightsContext);
 
     this.context.fillStyle = this.background;
     this.context.fillRect(-10000, -10000, 20000, 20000);
@@ -54,10 +64,28 @@ export class World {
         entity.render(this.context);
       }
     )
+    
+    this.getEntities(
+      (entityA:Entity, entityB: Entity):number => {
+        return entityA.position.y < entityB.position.y ? -1 : 1
+      }
+    ).forEach(
+      (entity: Entity) => {
+        entity.renderLight(this.lightsContext);
+      }
+    )
+
+
+
     if(time % 3 === 0) {
       this.collisionCheck()
     }
     this.context.restore();
+    this.lightsContext.restore();
+
+    const lightsBitmap = this.lightsContext.getImageData(0, 0, this.canvas.width, this.canvas.height);
+    this.context.globalCompositeOperation = 'overlay';
+    this.context.drawImage(this.lights,0,0, this.canvas.width, this.canvas.height);
   }
 
   collisionCheck() {

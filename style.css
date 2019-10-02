@@ -3,3 +3,11 @@ body, html, .game {
   padding: 0;
   overflow: hidden;
 }
+
+canvas {
+  position: absolute;
+}
+
+#lights {
+  display: none  
+}

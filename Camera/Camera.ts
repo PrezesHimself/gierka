@@ -67,15 +67,6 @@ export class Camera extends Entity {
   }
 
   render(context: CanvasRenderingContext2D ) {
-    context.translate(
-      -this.target.position.x,
-      -this.target.position.y
-    );
-    context.rotate(this.rotation *  Math.PI / 180);
-    context.translate(
-      this.target.position.x,
-      this.target.position.y
-    );
 
     context.translate(
       -this.position.x + this.offset.x ,
