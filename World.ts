@@ -86,6 +86,8 @@ export class World {
     const lightsBitmap = this.lightsContext.getImageData(0, 0, this.canvas.width, this.canvas.height);
     this.context.globalCompositeOperation = 'overlay';
     this.context.drawImage(this.lights,0,0, this.canvas.width, this.canvas.height);
+    this.context.globalCompositeOperation = 'source-over';
+
   }
 
   collisionCheck() {
