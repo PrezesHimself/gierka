@@ -43,6 +43,7 @@ export class World {
     this.context.save();
     this.lightsContext.save();
 
+    this.context.globalCompositeOperation = 'source-over';
     this.context.clearRect(0, 0, this.canvas.width, this.canvas.height);
     this.lightsContext.fillRect(0, 0, this.canvas.width, this.canvas.height);
 
@@ -75,9 +76,8 @@ export class World {
     this.lightsContext.restore();
 
     const lightsBitmap = this.lightsContext.getImageData(0, 0, this.canvas.width, this.canvas.height);
-    this.context.globalCompositeOperation = 'overlay';
+    this.context.globalCompositeOperation = 'multiply';
     this.context.drawImage(this.lights,0,0, this.canvas.width, this.canvas.height);
-    this.context.globalCompositeOperation = 'source-over';
 
   }
 

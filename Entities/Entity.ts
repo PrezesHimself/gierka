@@ -128,29 +128,7 @@ export class Entity {
   }
 
   renderLight(context: CanvasRenderingContext2D) {
-    context.globalCompositeOperation = 'screen';
 
-        // Radii of the white glow.
-    const innerRadius = 5,
-        outerRadius = 70,
-        // Radius of the entire circle.
-        radius = 60;
-
-    const gradient = context.createRadialGradient(
-      this.position.x,
-      this.position.y,
-      innerRadius,
-      this.position.x,
-      this.position.y,
-      outerRadius
-    );
-    gradient.addColorStop(0, 'white');
-    gradient.addColorStop(1, 'black');
-
-    context.arc(this.position.x, this.position.y, radius, 0, 2 * Math.PI);
-
-    context.fillStyle = gradient;
-    context.fill();
   }
 }
 
