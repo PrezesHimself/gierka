@@ -7,7 +7,7 @@ import './style.css';
 const canvas = <HTMLCanvasElement>document.getElementById('canvas');
 const lights = <HTMLCanvasElement>document.getElementById('lights')
 
-const game = new Game({ticksPerSecond: 60}, canvas, lights)
+const game = new Game({ticksPerSecond: 2}, canvas, lights)
 const world = game.getWorld();
 
 for(let x = 0; x < 10; x++) {

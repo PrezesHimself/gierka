@@ -32,6 +32,7 @@ export class World {
     );
 
     const backgroundImage = new Image()
+    backgroundImage.crossOrigin="anonymous";
     backgroundImage.src = 'https://cdnb.artstation.com/p/assets/images/images/001/146/575/large/ulrick-wery-tileableset2-soil.jpg?1441028621';
     backgroundImage.onload = () => {
       this.background = this.context.createPattern(backgroundImage, 'repeat');
@@ -75,9 +76,18 @@ export class World {
     this.context.restore();
     this.lightsContext.restore();
 
-    const lightsBitmap = this.lightsContext.getImageData(0, 0, this.canvas.width, this.canvas.height);
-    this.context.globalCompositeOperation = 'multiply';
-    this.context.drawImage(this.lights,0,0, this.canvas.width, this.canvas.height);
+    const imageData = this.context.getImageData(0,0,this.canvas.width,this.canvas.height);
+    const lightImageData = this.lightsContext.getImageData(0,0,this.canvas.width,this.canvas.height);
+
+    const data = imageData.data;
+    const lightData = lightImageData.data;
+    for (let i = 0; i < data.length; i += 4) {
+      data[i]     = data[i] * lightData[i];     // red
+      data[i + 1] = data[i + 1]; // green
+      data[i + 2] = data[i + 2]; // blue
+    }
+    this.context.putImageData(imageData, 0, 0);
+
 
   }
 

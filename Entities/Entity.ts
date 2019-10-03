@@ -124,7 +124,7 @@ export class Entity {
         this.sprite.size.height
       );
     }
-    // this.renderCollisionBox(context);
+    this.renderCollisionBox(context);
   }
 
   renderLight(context: CanvasRenderingContext2D) {
