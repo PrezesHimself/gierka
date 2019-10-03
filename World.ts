@@ -10,7 +10,7 @@ export class World {
   private camera: Camera;
   private player: Player;
   private background: Image = new Image();
-
+  private lightData:Uint8ClampedArray = new Uint8ClampedArray([]);
   public friction: number = 0.95;
 
   constructor(
@@ -64,27 +64,28 @@ export class World {
       (entity: Entity) => {
         entity.update(input, this);
         entity.render(this.context);
-        entity.renderLight(this.lightsContext);
+            if(time % 2 === 0) {
+              entity.renderLight(this.lightsContext);
+            }
       }
     )
 
 
 
-    if(time % 3 === 0) {
-      this.collisionCheck()
+    if(time % 10 === 0) {
+      this.collisionCheck();
+      const lightImageData = this.lightsContext.getImageData(0,0,this.canvas.width,this.canvas.height);
+      this.lightData = lightImageData.data;
     }
     this.context.restore();
     this.lightsContext.restore();
 
     const imageData = this.context.getImageData(0,0,this.canvas.width,this.canvas.height);
-    const lightImageData = this.lightsContext.getImageData(0,0,this.canvas.width,this.canvas.height);
-
     const data = imageData.data;
-    const lightData = lightImageData.data;
     for (let i = 0; i < data.length; i += 4) {
-      data[i]     = data[i];     // red
-      data[i + 1] = data[i + 1]; // green
-      data[i + 2] = data[i + 2]; // blue
+      data[i]     = (data[i] * this.lightData[i]) / 255;     // red
+      data[i + 1] = (data[i + 1] * this.lightData[i+1]) / 255; // green
+      data[i + 2] = (data[i + 2] * this.lightData[i+ 2]) / 255; // blue
     }
     this.context.putImageData(imageData, 0, 0);
 
