@@ -37,13 +37,12 @@ export class Player extends Entity {
     }
   }
   renderLight(context: CanvasRenderingContext2D) {
-    context.globalCompositeOperation = 'screen';
 
         // Radii of the white glow.
     const innerRadius = 5,
-        outerRadius = 180,
+        outerRadius = 400,
         // Radius of the entire circle.
-        radius = 200;
+        radius = 400;
 
     const gradient = context.createRadialGradient(
       this.position.x,
@@ -53,8 +52,8 @@ export class Player extends Entity {
       this.position.y,
       outerRadius
     );
-    gradient.addColorStop(0, 'white');
-    gradient.addColorStop(0.8, 'black');
+    gradient.addColorStop(0, '#aaa');
+    gradient.addColorStop(0.2, 'black');
 
     context.arc(this.position.x, this.position.y, radius, 0, 2 * Math.PI);
 

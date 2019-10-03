@@ -27,7 +27,7 @@ export class Entity {
 
     this.sprite = new Sprite(
       'https://i.ibb.co/CKKVtdY/Pin-Clipart-com-videogames-clipart-576226.png',
-      {width: 40, height: 40}
+      {width: 30, height: 30}
     );
 
     if(this.isColliding) {
@@ -124,7 +124,7 @@ export class Entity {
         this.sprite.size.height
       );
     }
-    this.renderCollisionBox(context);
+    // this.renderCollisionBox(context);
   }
 
   renderLight(context: CanvasRenderingContext2D) {

@@ -6,6 +6,8 @@ body, html, .game {
 
 canvas {
   position: absolute;
+  width: 100vw;
+  hright: 100vh;
 }
 
 #lights {

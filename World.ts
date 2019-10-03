@@ -86,9 +86,9 @@ export class World {
     const imageData = this.context.getImageData(0,0,this.canvas.width,this.canvas.height);
     const data = imageData.data;
     for (let i = 0; i < data.length; i += 4) {
-      data[i]     = (data[i] * (this.lightData[i] + 100))  / 255;     // red
-      data[i + 1] = (data[i + 1] * this.lightData[i+1]) / 255; // green
-      data[i + 2] = (data[i + 2] * this.lightData[i+ 2]) / 255; // blue
+      data[i] = (data[i] * (Math.pow(this.lightData[i], 1.4) + 100)) / 255;// red
+      data[i + 1] = (data[i + 1] * (Math.pow(this.lightData[i], 1.4))) / 255; // green
+      data[i + 2] = (data[i + 2] * (Math.pow(this.lightData[i], 1.4) + 30)) / 255; // blue
     }
     this.context.putImageData(imageData, 0, 0);
 
