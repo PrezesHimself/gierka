@@ -44,7 +44,6 @@ export class World {
     this.context.save();
     this.lightsContext.save();
 
-    this.context.globalCompositeOperation = 'source-over';
     this.context.clearRect(0, 0, this.canvas.width, this.canvas.height);
     this.lightsContext.fillRect(0, 0, this.canvas.width, this.canvas.height);
 
@@ -64,7 +63,7 @@ export class World {
       (entity: Entity) => {
         entity.update(input, this);
         entity.render(this.context);
-            if(time % 2 === 0) {
+            if(time % 10 === 0) {
               entity.renderLight(this.lightsContext);
             }
       }
@@ -72,18 +71,22 @@ export class World {
 
 
 
-    if(time % 10 === 0) {
+    if(time % 4 === 0) {
       this.collisionCheck();
+    }
+
+    if(time % 10 === 0) {
       const lightImageData = this.lightsContext.getImageData(0,0,this.canvas.width,this.canvas.height);
       this.lightData = lightImageData.data;
     }
+
     this.context.restore();
     this.lightsContext.restore();
 
     const imageData = this.context.getImageData(0,0,this.canvas.width,this.canvas.height);
     const data = imageData.data;
     for (let i = 0; i < data.length; i += 4) {
-      data[i]     = (data[i] * this.lightData[i]) / 255;     // red
+      data[i]     = (data[i] * (this.lightData[i] + 100))  / 255;     // red
       data[i + 1] = (data[i + 1] * this.lightData[i+1]) / 255; // green
       data[i + 2] = (data[i + 2] * this.lightData[i+ 2]) / 255; // blue
     }

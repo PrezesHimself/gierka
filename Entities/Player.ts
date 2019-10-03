@@ -54,7 +54,7 @@ export class Player extends Entity {
       outerRadius
     );
     gradient.addColorStop(0, 'white');
-    gradient.addColorStop(1, 'black');
+    gradient.addColorStop(0.8, 'black');
 
     context.arc(this.position.x, this.position.y, radius, 0, 2 * Math.PI);
 
