@@ -82,7 +82,7 @@ export class World {
     const data = imageData.data;
     const lightData = lightImageData.data;
     for (let i = 0; i < data.length; i += 4) {
-      data[i]     = data[i] * lightData[i];     // red
+      data[i]     = data[i];     // red
       data[i + 1] = data[i + 1]; // green
       data[i + 2] = data[i + 2]; // blue
     }
