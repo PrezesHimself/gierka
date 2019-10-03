@@ -10,7 +10,7 @@ const lights = <HTMLCanvasElement>document.getElementById('lights')
 const game = new Game({ticksPerSecond: 60}, canvas, lights)
 const world = game.getWorld();
 
-for(let x = 0; x < 10; x++) {
+for(let x = 0; x < 3; x++) {
   for(let y = 0; y < 10; y++) {
     world.addEntity(new Entity(
       {x: 100 * x, y: 100 * y},

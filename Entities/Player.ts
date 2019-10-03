@@ -37,28 +37,20 @@ export class Player extends Entity {
     }
   }
   renderLight(context: CanvasRenderingContext2D) {
-
+    context.globalCompositeOperation = 'lighter';
         // Radii of the white glow.
-    const innerRadius = 5,
-        outerRadius = 400,
-        // Radius of the entire circle.
-        radius = 400;
+    const radius = 80;
 
-    const gradient = context.createRadialGradient(
-      this.position.x,
-      this.position.y,
-      innerRadius,
-      this.position.x,
-      this.position.y,
-      outerRadius
-    );
-    gradient.addColorStop(0, '#aaa');
-    gradient.addColorStop(0.2, 'black');
-
-    context.arc(this.position.x, this.position.y, radius, 0, 2 * Math.PI);
-
-    context.fillStyle = gradient;
+    context.fillStyle = "#111"; //blue
+    context.beginPath();
+    context.arc(this.position.x,this.position.y,radius,0,Math.PI*2,true);
+    context.closePath();
     context.fill();
+        context.beginPath();
+    context.arc(this.position.x,this.position.y,radius*.8,0,Math.PI*2,true);
+    context.closePath();
+    context.fill();
+    // context.fill();
   }
 
 }

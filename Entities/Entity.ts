@@ -128,7 +128,20 @@ export class Entity {
   }
 
   renderLight(context: CanvasRenderingContext2D) {
+    context.globalCompositeOperation = 'lighter';
+        // Radii of the white glow.
+    const radius = 40;
 
+    context.fillStyle = "#111"; //blue
+    context.beginPath();
+    context.arc(this.position.x,this.position.y,radius,0,Math.PI*2,true);
+    context.closePath();
+    context.fill();
+        context.beginPath();
+    context.arc(this.position.x,this.position.y,radius*.8,0,Math.PI*2,true);
+    context.closePath();
+    context.fill();
+    // context.fill();
   }
 }
 

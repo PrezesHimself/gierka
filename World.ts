@@ -45,6 +45,7 @@ export class World {
     this.lightsContext.save();
 
     this.context.clearRect(0, 0, this.canvas.width, this.canvas.height);
+    this.context.fillStyle = 'black';
     this.lightsContext.fillRect(0, 0, this.canvas.width, this.canvas.height);
 
     this.camera.update(input, this);
@@ -63,9 +64,9 @@ export class World {
       (entity: Entity) => {
         entity.update(input, this);
         entity.render(this.context);
-            if(time % 10 === 0) {
-              entity.renderLight(this.lightsContext);
-            }
+            // if(time % 10 === 0) {
+        entity.renderLight(this.lightsContext);
+            // }
       }
     )
 
@@ -75,10 +76,10 @@ export class World {
       this.collisionCheck();
     }
 
-    if(time % 10 === 0) {
+    // if(time % 10 === 0) {
       const lightImageData = this.lightsContext.getImageData(0,0,this.canvas.width,this.canvas.height);
       this.lightData = lightImageData.data;
-    }
+    // }
 
     this.context.restore();
     this.lightsContext.restore();
