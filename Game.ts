@@ -2,6 +2,7 @@ import {Entity} from "./Entities/Entity";
 import {World} from "./World"; 
 import {Mouse} from "./Input/Mouse";
 import {Keyboard} from "./Input/Keyboard";
+import {Camera} from "./Camera/Camera";
 
 export interface Input {
     mouse: Mouse,
@@ -9,7 +10,7 @@ export interface Input {
   }
 
 export class Game {
-  gameTimer: number;
+  gameTimer: NodeJS.Timeout;
   gameTicks: number = 0;
 
 
@@ -22,7 +23,7 @@ export class Game {
 
   camera: Camera;
 
-  constructor(options: GameOptions, canvas: HTMLCanvasElement, lights: HTMLCanvasElement) {
+  constructor(options: GameOptions, canvas: OffscreenCanvas, lights: HTMLCanvasElement) {
     this.options = options;
     
     this.world = new World(canvas, lights);
@@ -43,7 +44,7 @@ export class Game {
     }
   }
 
-  resizeCanvas(canvas) {
+  resizeCanvas(canvas: OffscreenCanvas  ) {
     canvas.width = window.innerWidth;
     canvas.height = window.innerHeight;
   }
@@ -51,14 +52,14 @@ export class Game {
   public start() {
     console.log('game started', this.options);
     this.time = 0;
-    this.gameTick()
+    this.gameTick();
     this.gameTimer = setInterval(
       () => {
         this.gameTick();
       },
       (1000) / this.options.ticksPerSecond
-    )
-    this.world.update(this.input);
+    );
+    this.world.update(this.input, this.time);
   }
 
   private gameTick() {

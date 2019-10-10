@@ -47,7 +47,7 @@ export class Camera extends Entity {
 
 
     if(this.target && !this.freeHand) {
-      // (this as Entity).moveTo(this.target.position)
+      (this as Entity).moveTo(this.target.position)
     } else {
       if(input.keyboard.isDown(Keyboard.KEYCODES.d) || input.mouse.x > window.innerWidth - this.scrollBorder) {
         this.velocity.x += this.speed.x;
@@ -66,7 +66,7 @@ export class Camera extends Entity {
     }
   }
 
-  render(context: CanvasRenderingContext2D ) {
+  render(context: CanvasRenderingContext2D | OffscreenCanvasRenderingContext2D ) {
 
     context.translate(
       -this.position.x + this.offset.x ,

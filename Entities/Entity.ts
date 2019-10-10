@@ -114,7 +114,7 @@ export class Entity {
     this.velocity.y = -Math.sin(collision.getCollisionAngle()) * force.y;
   }
 
-  render(context: CanvasRenderingContext2D) {
+  render(context: CanvasRenderingContext2D | OffscreenCanvasRenderingContext2D) {
     if(this.sprite.isReady) {
       context.drawImage(
         this.sprite.image,

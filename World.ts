@@ -4,7 +4,7 @@ import {Camera} from "./Camera";
 import {Point} from "./Geometry";
 
 export class World {
-  private readonly context: CanvasRenderingContext2D;
+  private readonly context: OffscreenCanvasRenderingContext2D;
   private readonly lightsContext: CanvasRenderingContext2D;
   private entities: Entity[] = [];
   private camera: Camera;
@@ -14,7 +14,7 @@ export class World {
   public friction: number = 0.95;
 
   constructor(
-    private readonly canvas: HTMLCanvasElement,
+    private readonly canvas: OffscreenCanvas,
     private readonly lights: HTMLCanvasElement
   ) {
     this.context = this.canvas.getContext('2d');

@@ -7,7 +7,9 @@
   "private": true,
   "dependencies": {},
   "devDependencies": {
+    "@types/stats": "^0.16.30",
     "css-loader": "^3.2.0",
+    "stats.js": "^0.17.0",
     "style-loader": "^1.0.0",
     "ts-loader": "^6.2.0",
     "typescript": "^3.6.4",
