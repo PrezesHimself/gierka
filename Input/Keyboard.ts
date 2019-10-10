@@ -100,15 +100,15 @@ export class Keyboard {
   'single_quote' : '222'
  }
 
-  public keyCodes: {} = {};
+  public keyCodes: any = {};
 
   constructor() {
-    document.addEventListener('keydown', event => {
-        this.keyCodes[event.keyCode] = true;
+    document.addEventListener('keydown', (event: KeyboardEvent) => {
+        this.keyCodes[event.code] = true;
     }, false);
     
-    document.addEventListener('keyup', event => {
-        delete this.keyCodes[event.keyCode];
+    document.addEventListener('keyup', (event: KeyboardEvent) => {
+        delete this.keyCodes[event.code];
     }, false);
   };
 

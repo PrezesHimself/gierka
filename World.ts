@@ -9,7 +9,7 @@ export class World {
   private entities: Entity[] = [];
   private camera: Camera;
   private player: Player;
-  private background: Image = new Image();
+  private background: CanvasPattern;
   private lightData:Uint8ClampedArray = new Uint8ClampedArray([]);
   public friction: number = 0.95;
 
@@ -21,7 +21,7 @@ export class World {
     this.lightsContext = this.lights.getContext('2d');
 
     this.player = this.addEntity(new Player(
-        {x: 440, y: 440},
+        new Point(440, 440),
         {width: 30, height: 30}
     ));
 
@@ -68,7 +68,7 @@ export class World {
         entity.renderLight(this.lightsContext);
             // }
       }
-    )
+    );
 
 
 
@@ -124,7 +124,7 @@ export class World {
     this.entities = this.entities.filter( e => e !== entity )
   }
 
-  public getEntities(sort: Function) : Entity[] {
+  public getEntities(sort: (a: Entity, b: Entity) => number) : Entity[] {
     if(!sort) return this.entities;
 
     return this.entities.sort(sort)

@@ -1,5 +1,5 @@
-import {World} from "./World";
-import {Input} from "./Game";
+import {World} from "../World";
+import {Input} from "../Game";
 import {Polygon, Point} from "../Geometry"; 
 import {Collision} from "../Physics";
 import {Sprite} from "../Graphics";
@@ -11,16 +11,16 @@ export class Entity {
   collision: Polygon;
   rotation: number = 0;
   collidesWith: Entity[] = [];
-  private isColliding: boolean = true;
+  public isColliding: boolean = true;
   private sprite: Sprite;
 
   weight: number = 1000 * 0.017;
 
   constructor(
-    protected position: Position,
-    protected size: Size = null,
-    protected speed: Vector2D = null,
-    protected velocity: Vector2D = {x: 0, y: 0}
+    public position: Position,
+    public size: Size = null,
+    public speed: Vector2D = null,
+    public velocity: Vector2D = {x: 0, y: 0}
   ) {
     const halfWidth: number = this.size.width/2;
     const halfHeight: number = this.size.height/2;
@@ -145,7 +145,7 @@ export class Entity {
   }
 }
 
-export interface Position extends Vector2D{
+export interface Position extends Point{
 }
 
 export interface Size {

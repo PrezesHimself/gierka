@@ -1,19 +1,19 @@
-import {Game, GameOptions} from './Game';
-import {Entity, Position, Size} from './Entities/Entity';
-import {Collectable} from "./Entities";
-import {Point, Edge} from "./Geometry";
+import {Game} from './Game';
+import {Entity} from './Entities/Entity';
 import './style.css';
+import {Point} from "./Geometry/Point";
 
 const canvas = <HTMLCanvasElement>document.getElementById('canvas');
-const lights = <HTMLCanvasElement>document.getElementById('lights')
+const lights = <HTMLCanvasElement>document.getElementById('lights');
 
-const game = new Game({ticksPerSecond: 60}, canvas, lights)
+console.log('tesr', canvas, document);
+const game = new Game({ticksPerSecond: 60}, canvas, lights);
 const world = game.getWorld();
 
 for(let x = 0; x < 3; x++) {
   for(let y = 0; y < 10; y++) {
     world.addEntity(new Entity(
-      {x: 100 * x, y: 100 * y},
+      new Point(100 * x, 100 * y),
       {width: 20, height: 20}
     ));
   }

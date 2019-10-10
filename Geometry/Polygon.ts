@@ -27,7 +27,7 @@ export class Polygon {
         }
 
         return center;
-      }, {x: 0, y: 0});
+      }, new Point(0,0));
   };
 
   public collisionCheck(polygon: Polygon): boolean {

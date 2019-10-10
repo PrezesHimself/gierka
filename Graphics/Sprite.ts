@@ -1,6 +1,6 @@
 export class Sprite {
   isReady: boolean = false;
-  image: Image = new Image();
+  image: HTMLImageElement = new Image();
 
   constructor(
     imageUrl: string,

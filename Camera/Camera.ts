@@ -1,13 +1,13 @@
 import {Point} from "../Geometry"
 import {Entity} from "../Entities"
-import {World} from "./World";
-import {Input} from "./Game";
+import {World} from "../World";
+import {Input} from "../Game";
 import {Keyboard} from "../Input/Keyboard";
+import {Vector2D} from "../Entities/Entity";
 
 export class Camera extends Entity {
   private offset: Point;
   private freeHand: boolean = true;
-  private isColliding: boolean = false;
   private scrollBorder: number = 50;
   weight: number = 60 * 0.017;
   speed = {
@@ -19,7 +19,7 @@ export class Camera extends Entity {
     public position: Point,
     private readonly target: Entity = null,
     private readonly canvas: HTMLCanvasElement,
-    protected velocity: Vector2D = {x: 0, y: 0}
+    public velocity: Vector2D = {x: 0, y: 0}
   ) {
     super(
       position,
@@ -47,7 +47,7 @@ export class Camera extends Entity {
 
 
     if(this.target && !this.freeHand) {
-      this.moveTo(this.target.position)
+      // (this as Entity).moveTo(this.target.position)
     } else {
       if(input.keyboard.isDown(Keyboard.KEYCODES.d) || input.mouse.x > window.innerWidth - this.scrollBorder) {
         this.velocity.x += this.speed.x;

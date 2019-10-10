@@ -17,10 +17,10 @@ export class Collision {
   }
 
   getCollisionForce(): Point {
-    return {
-      x: Math.abs(this.entityA.velocity.x) +  Math.abs(this.entityB.velocity.x), 
-      y: Math.abs(this.entityA.velocity.y) +  Math.abs(this.entityB.velocity.y) 
-    }
+    return new Point(
+      Math.abs(this.entityA.velocity.x) +  Math.abs(this.entityB.velocity.x),
+      Math.abs(this.entityA.velocity.y) +  Math.abs(this.entityB.velocity.y)
+    )
   }
 
 
