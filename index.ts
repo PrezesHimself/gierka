@@ -8,6 +8,7 @@ const canvas = <HTMLCanvasElement>document.getElementById('canvas');
 
 const game = new Game({ticksPerSecond: 60}, canvas);
 const world = game.getWorld();
+const stats = process.env.DEBUG && new Stats();
 
 for(let x = 0; x < 3; x++) {
   for(let y = 0; y < 10; y++) {
@@ -20,17 +21,19 @@ for(let x = 0; x < 3; x++) {
 
 game.start();
 
-const stats = new Stats();
-stats.showPanel( 0 ); // 0: fps, 1: ms, 2: mb, 3+: custom
-document.body.appendChild( stats.dom );
+if(stats) {
+  stats.showPanel( 0 ); // 0: fps, 1: ms, 2: mb, 3+: custom
+  document.body.appendChild( stats.dom );
+}
+
 
 function animate() {
 
-  stats.begin();
+  if(stats) stats.begin();
 
   requestAnimationFrame( animate );
 
-  stats.end();
+  if(stats) stats.end();
 
 
 }
