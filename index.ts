@@ -6,7 +6,14 @@ import Stats from 'stats.js';
 
 const canvas = <HTMLCanvasElement>document.getElementById('canvas');
 
-const game = new Game({ticksPerSecond: 60}, canvas);
+const game = new Game(
+    {
+      ticksPerSecond: 60,
+      pixelRatio: 2
+    },
+    canvas
+);
+
 const world = game.getWorld();
 const stats = process.env.DEBUG && new Stats();
 

@@ -1,5 +1,6 @@
 import {Entity} from "./Entities/Entity";
 import {World} from "./World"; 
+import {Point} from "./Geometry";
 import {Mouse} from "./Input/Mouse";
 import {Keyboard} from "./Input/Keyboard";
 import {Camera} from "./Camera/Camera";
@@ -25,8 +26,15 @@ export class Game {
 
   constructor(options: GameOptions, canvas: HTMLCanvasElement) {
     this.options = options;
-    
-    this.world = new World(canvas);
+
+    this.camera = new Camera(
+        new Point(0,0),
+        null,
+        canvas,
+        options
+    );
+
+    this.world = new World(canvas, this.camera);
 
     window.addEventListener('resize', () => {
       this.resizeCanvas(canvas);
@@ -43,8 +51,8 @@ export class Game {
   }
 
   resizeCanvas(canvas: HTMLCanvasElement  ) {
-    canvas.width = window.innerWidth;
-    canvas.height = window.innerHeight;
+    canvas.width = window.innerWidth / this.options.pixelRatio;
+    canvas.height = window.innerHeight / this.options.pixelRatio;
   }
 
   public start() {
@@ -73,5 +81,6 @@ export class Game {
 export interface GameOptions {
   debug?: boolean,
   fps?: number,
-  ticksPerSecond: number
+  ticksPerSecond: number,
+  pixelRatio: number
 }
