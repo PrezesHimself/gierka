@@ -6,7 +6,7 @@ import {World} from "../World";
 export class Player extends Entity {
   selectable: boolean = true;
   color:string = 'orange';
-  speed: Vector2D = {
+  acceleration: Vector2D = {
     x: .4,
     y: .4
   };
@@ -23,16 +23,16 @@ export class Player extends Entity {
 
 
     if(input.keyboard.isDown(Keyboard.KEYCODES.right_arrow)) {
-      this.velocity.x += this.speed.x;
+      this.velocity.x += this.acceleration.x;
     } 
     if(input.keyboard.isDown(Keyboard.KEYCODES.left_arrow)) {
-      this.velocity.x -= this.speed.x;
+      this.velocity.x -= this.acceleration.x;
     } 
     if(input.keyboard.isDown(Keyboard.KEYCODES.up_arrow)) {
-      this.velocity.y -= this.speed.x;
+      this.velocity.y -= this.acceleration.x;
     }  
     if(input.keyboard.isDown(Keyboard.KEYCODES.down_arrow)) {
-      this.velocity.y += this.speed.x;
+      this.velocity.y += this.acceleration.x;
     }
   }
 }

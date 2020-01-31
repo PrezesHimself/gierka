@@ -1,8 +1,8 @@
 import {World} from "../World";
 import {Input} from "../Game";
-import {Polygon, Point} from "../Geometry"; 
-import {Collision} from "../Physics";
-import {Sprite} from "../Graphics";
+import {Polygon, Point} from "../Geometry/index";
+import {Collision} from "../Physics/index";
+import {Sprite} from "../Graphics/index";
 
 export class Entity {
   
@@ -19,7 +19,7 @@ export class Entity {
   constructor(
     public position: Position,
     public size: Size = null,
-    public speed: Vector2D = null,
+    public acceleration: Vector2D = null,
     public velocity: Vector2D = {x: 0, y: 0}
   ) {
     const halfWidth: number = this.size.width/2;
