@@ -4,21 +4,17 @@ import {Camera} from "./Camera";
 import {Point} from "./Geometry";
 
 export class World {
-  private readonly context: OffscreenCanvasRenderingContext2D;
-  private readonly lightsContext: CanvasRenderingContext2D;
+  private readonly context: CanvasRenderingContext2D;
   private entities: Entity[] = [];
   private camera: Camera;
   private player: Player;
   private background: CanvasPattern;
-  private lightData:Uint8ClampedArray = new Uint8ClampedArray([]);
   public friction: number = 0.95;
 
   constructor(
-    private readonly canvas: OffscreenCanvas,
-    private readonly lights: HTMLCanvasElement
+    private readonly canvas: HTMLCanvasElement
   ) {
     this.context = this.canvas.getContext('2d');
-    this.lightsContext = this.lights.getContext('2d');
 
     this.player = this.addEntity(new Player(
         new Point(440, 440),
@@ -42,15 +38,12 @@ export class World {
   update(input: Input, time: number) {
     // do stuff
     this.context.save();
-    this.lightsContext.save();
 
     this.context.clearRect(0, 0, this.canvas.width, this.canvas.height);
     this.context.fillStyle = 'black';
-    this.lightsContext.fillRect(0, 0, this.canvas.width, this.canvas.height);
 
     this.camera.update(input, this);
     this.camera.render(this.context);
-    this.camera.render(this.lightsContext);
 
     this.context.fillStyle = this.background;
     this.context.fillRect(-10000, -10000, 20000, 20000);
@@ -64,9 +57,6 @@ export class World {
       (entity: Entity) => {
         entity.update(input, this);
         entity.render(this.context);
-            // if(time % 10 === 0) {
-        entity.renderLight(this.lightsContext);
-            // }
       }
     );
 
@@ -76,24 +66,7 @@ export class World {
       this.collisionCheck();
     }
 
-    // if(time % 10 === 0) {
-      const lightImageData = this.lightsContext.getImageData(0,0,this.canvas.width,this.canvas.height);
-      this.lightData = lightImageData.data;
-    // }
-
     this.context.restore();
-    this.lightsContext.restore();
-
-    const imageData = this.context.getImageData(0,0,this.canvas.width,this.canvas.height);
-    const data = imageData.data;
-    for (let i = 0; i < data.length; i += 4) {
-      data[i] = (data[i] * (Math.pow(this.lightData[i], 1.4) + 100)) / 255;// red
-      data[i + 1] = (data[i + 1] * (Math.pow(this.lightData[i], 1.4))) / 255; // green
-      data[i + 2] = (data[i + 2] * (Math.pow(this.lightData[i], 1.4) + 30)) / 255; // blue
-    }
-    this.context.putImageData(imageData, 0, 0);
-
-
   }
 
   collisionCheck() {

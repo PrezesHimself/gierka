@@ -23,18 +23,16 @@ export class Game {
 
   camera: Camera;
 
-  constructor(options: GameOptions, canvas: OffscreenCanvas, lights: HTMLCanvasElement) {
+  constructor(options: GameOptions, canvas: HTMLCanvasElement) {
     this.options = options;
     
-    this.world = new World(canvas, lights);
+    this.world = new World(canvas);
 
     window.addEventListener('resize', () => {
       this.resizeCanvas(canvas);
-      this.resizeCanvas(lights)
     }, false);
 
     this.resizeCanvas(canvas);
-    this.resizeCanvas(lights)
     
     this.mouse = new Mouse(canvas);
     this.keyboard = new Keyboard()
@@ -44,7 +42,7 @@ export class Game {
     }
   }
 
-  resizeCanvas(canvas: OffscreenCanvas  ) {
+  resizeCanvas(canvas: HTMLCanvasElement  ) {
     canvas.width = window.innerWidth;
     canvas.height = window.innerHeight;
   }

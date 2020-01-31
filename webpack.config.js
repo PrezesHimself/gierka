@@ -2,7 +2,6 @@ const path = require('path');
 
 module.exports = {
   entry: {
-    worker: './worker/worker.ts',
     bundle: './index.ts'
   },
   module: {

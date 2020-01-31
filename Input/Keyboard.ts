@@ -104,16 +104,16 @@ export class Keyboard {
 
   constructor() {
     document.addEventListener('keydown', (event: KeyboardEvent) => {
-        this.keyCodes[event.code] = true;
+        this.keyCodes[event.keyCode] = true;
     }, false);
     
     document.addEventListener('keyup', (event: KeyboardEvent) => {
-        delete this.keyCodes[event.code];
+        delete this.keyCodes[event.keyCode];
     }, false);
   };
 
   isDown(keyCode: string): boolean {
-    return Object.keys(this.keyCodes).includes(keyCode);
+   return Object.keys(this.keyCodes).includes(keyCode);
   }
 
 }
