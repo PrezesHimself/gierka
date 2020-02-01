@@ -1,6 +1,6 @@
 import {Entity} from "./Entities/Entity";
 import {World} from "./World"; 
-import {Point} from "./Geometry";
+import {Point} from "./Geometry/index";
 import {Mouse} from "./Input/Mouse";
 import {Keyboard} from "./Input/Keyboard";
 import {Camera} from "./Camera/Camera";
