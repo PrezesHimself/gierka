@@ -14,23 +14,13 @@ const game = new Game(
     canvas
 );
 
-const world = game.getWorld();
-const stats = process.env.DEBUG && new Stats();
-
-for(let x = 0; x < 3; x++) {
-  for(let y = 0; y < 10; y++) {
-    world.addEntity(new Entity(
-      new Point(100 * x, 100 * y),
-      {width: 20, height: 20}
-    ));
-  }
-}
+const stats: any = new Stats();
 
 game.start();
 
 if(stats) {
-  stats.showPanel( 0 ); // 0: fps, 1: ms, 2: mb, 3+: custom
-  document.body.appendChild( stats.dom );
+    stats.dom && stats.showPanel( 0 );
+  document.body.appendChild( stats.dom || stats.domElement );
 }
 
 
@@ -46,3 +36,10 @@ function animate() {
 }
 
 requestAnimationFrame( animate );
+
+// todo move to new ./Debug/Debug.ts
+const debug: any = {
+    game
+};
+(window as any).debug = debug;
+

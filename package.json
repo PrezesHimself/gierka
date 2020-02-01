@@ -5,7 +5,9 @@
     "start:dev": "webpack-dev-server"
   },
   "private": true,
-  "dependencies": {},
+  "dependencies": {
+    "stats.js": "1.0.0"
+  },
   "devDependencies": {
     "@types/stats": "^0.16.30",
     "css-loader": "^3.2.0",
