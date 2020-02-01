@@ -14,13 +14,12 @@ const game = new Game(
     canvas
 );
 
-const stats = process.env.DEBUG && new Stats();
+const stats = new Stats();
 
 game.start();
 
 if(stats) {
-  stats.showPanel( 0 ); // 0: fps, 1: ms, 2: mb, 3+: custom
-  document.body.appendChild( stats.dom );
+  document.body.appendChild( stats.domElement );
 }
 
 
