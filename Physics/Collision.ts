@@ -1,5 +1,5 @@
-import {Entity} from "../Entities";
-import {Point} from "../Geometry";
+import {Entity} from "../Entities/index";
+import {Point} from "../Geometry/index";
 
 export class Collision {
   entityA: Entity;

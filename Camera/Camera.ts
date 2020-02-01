@@ -1,5 +1,5 @@
-import {Point} from "../Geometry"
-import {Entity} from "../Entities"
+import {Point} from "../Geometry/index"
+import {Entity} from "../Entities/index"
 import {World} from "../World";
 import {GameOptions, Input} from "../Game";
 import {Keyboard} from "../Input/Keyboard";
