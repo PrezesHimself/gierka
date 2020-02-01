@@ -1,6 +1,6 @@
 import {Entity} from "./Entities/Entity";
-import {World} from "./World"; 
-import {Point} from "./Geometry";
+import {JacksRoom, Sandbox, World} from "./World/index";
+import {Point} from "./Geometry/index";
 import {Mouse} from "./Input/Mouse";
 import {Keyboard} from "./Input/Keyboard";
 import {Camera} from "./Camera/Camera";
@@ -16,7 +16,14 @@ export class Game {
 
 
   options: GameOptions;
-  world: World;
+  //todo worlds should be rewriten to WorldsManager class
+  //todo since I had problem with resetting the level after change
+  // due to the bad implementation of collision box position
+  // i change that to a factory of levels so the current world
+  // get a fresh instance - that acually might not be a problem
+  // perhaps that even better from the memory managment point of view
+  public worlds: (() => World)[];
+  currentWorld: World;
   mouse: Mouse;
   keyboard: Keyboard;
   input: Input; 
@@ -25,8 +32,6 @@ export class Game {
   camera: Camera;
 
   constructor(options: GameOptions, canvas: HTMLCanvasElement) {
-    this.options = options;
-
     this.camera = new Camera(
         new Point(0,0),
         null,
@@ -34,7 +39,14 @@ export class Game {
         options
     );
 
-    this.world = new World(canvas, this.camera);
+    this.worlds = [
+      () => new Sandbox(canvas, this.camera, this),
+      () => new JacksRoom(canvas, this.camera, this)
+    ];
+
+    this.options = options;
+
+    this.currentWorld = this.worlds[0]();
 
     window.addEventListener('resize', () => {
       this.resizeCanvas(canvas);
@@ -65,16 +77,20 @@ export class Game {
       },
       (1000) / this.options.ticksPerSecond
     );
-    this.world.update(this.input, this.time);
+    this.currentWorld.update(this.input, this.time);
   }
 
   private gameTick() {
     this.time++;
-    this.world.update(this.input, this.time);
+    this.currentWorld.update(this.input, this.time);
   }
 
   public getWorld(): World {
-    return this.world;
+    return this.currentWorld;
+  }
+
+  public setCurrentWorld(worldIndex: number) {
+    this.currentWorld = this.worlds[worldIndex]();
   }
 }
 
