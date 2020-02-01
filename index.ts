@@ -14,12 +14,13 @@ const game = new Game(
     canvas
 );
 
-const stats = new Stats();
+const stats: any = new Stats();
 
 game.start();
 
 if(stats) {
-  document.body.appendChild( stats.domElement );
+    stats.dom && stats.showPanel( 0 );
+  document.body.appendChild( stats.dom || stats.domElement );
 }
 
 

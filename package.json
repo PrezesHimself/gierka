@@ -6,8 +6,7 @@
   },
   "private": true,
   "dependencies": {
-    "stats-js": "1.0.1",
-    "stats.js": "^1.0.0"
+    "stats.js": "1.0.0"
   },
   "devDependencies": {
     "@types/stats": "^0.16.30",
