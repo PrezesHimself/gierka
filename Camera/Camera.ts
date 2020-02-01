@@ -1,7 +1,7 @@
 import {Point} from "../Geometry"
 import {Entity} from "../Entities"
 import {World} from "../World";
-import {Input} from "../Game";
+import {GameOptions, Input} from "../Game";
 import {Keyboard} from "../Input/Keyboard";
 import {Vector2D} from "../Entities/Entity";
 
@@ -17,8 +17,9 @@ export class Camera extends Entity {
 
   constructor(
     public position: Point,
-    private readonly target: Entity = null,
+    private target: Entity = null,
     private readonly canvas: HTMLCanvasElement,
+    private readonly options: GameOptions,
     public velocity: Vector2D = {x: 0, y: 0}
   ) {
     super(
@@ -26,7 +27,10 @@ export class Camera extends Entity {
       {width: canvas.width, height: canvas.height}
       )
     this.freeHand = !target;
-    this.offset = new Point(window.innerWidth / 2, window.innerHeight/2)
+    this.offset = new Point(
+        window.innerWidth / options.pixelRatio / 2,
+        window.innerHeight / options.pixelRatio / 2
+    )
   }
 
   update(input: Input, world: World) {
@@ -67,11 +71,14 @@ export class Camera extends Entity {
   }
 
   render(context: CanvasRenderingContext2D | OffscreenCanvasRenderingContext2D ) {
-
     context.translate(
       -this.position.x + this.offset.x ,
       -this.position.y + this.offset.y
     );
+  }
 
+  setTarget(target: Entity) {
+    this.freeHand = false;
+    this.target = target;
   }
 }

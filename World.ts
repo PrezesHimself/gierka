@@ -1,18 +1,18 @@
-import {Entity, Player} from "./Entities";
-import {Input} from "./Game";
-import {Camera} from "./Camera";
-import {Point} from "./Geometry";
+import {Entity, Player} from "./Entities/index";
+import {GameOptions, Input} from "./Game";
+import {Camera} from "./Camera/index";
+import {Point} from "./Geometry/index";
 
 export class World {
   private readonly context: CanvasRenderingContext2D;
   private entities: Entity[] = [];
-  private camera: Camera;
   private player: Player;
   private background: CanvasPattern;
   public friction: number = 0.95;
 
   constructor(
-    private readonly canvas: HTMLCanvasElement
+    private readonly canvas: HTMLCanvasElement,
+    private readonly camera: Camera
   ) {
     this.context = this.canvas.getContext('2d');
 
@@ -21,11 +21,7 @@ export class World {
         {width: 30, height: 30}
     ));
 
-    this.camera = new Camera(
-      new Point(0,0),
-      this.player,
-      this.canvas
-    );
+    camera.setTarget(this.player);
 
     const backgroundImage = new Image()
     backgroundImage.crossOrigin="anonymous";
