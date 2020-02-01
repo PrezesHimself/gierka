@@ -1,4 +1,4 @@
-import {Point, Edge} from "../Geometry"
+import {Point, Edge} from "../Geometry/index"
 
 export class Polygon {
   edges: Edge[];

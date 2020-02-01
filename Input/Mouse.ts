@@ -1,4 +1,4 @@
-import {Entity} from "../Entities";
+import {Entity} from "../Entities/index";
 
 export class Mouse {
   isDown: boolean = false;
