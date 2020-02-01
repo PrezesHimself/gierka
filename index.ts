@@ -14,7 +14,7 @@ const game = new Game(
     canvas
 );
 
-const stats = new Stats();
+const stats = process.env.DEBUG && new Stats();
 
 game.start();
 
